@@ -24,7 +24,29 @@
 - Validar antes de avançar
 
 ## Estrutura do Projeto
-- acrescente a estrutura final aqui
+
+```
+GeomTransf/
+├── src/
+│   ├── __init__.py              # Exports principais
+│   ├── main.py                  # Interface CLI com argparse
+│   ├── mask_loader.py           # Carregamento e validação de máscaras
+│   ├── transformations.py       # Transformações geométricas (rotate, scale, flip, elastic)
+│   ├── mask_generator.py        # Geração das 100 máscaras transformadas
+│   ├── metrics.py               # Cálculo de IoU e shape descriptors
+│   └── evaluator.py             # Avaliação estatística e teste K-S
+├── output/
+│   └── generated_masks/         # 100 máscaras geradas (.png)
+│       └── transformations_log.txt
+├── results/
+│   ├── evaluation_results.json  # Métricas calculadas
+│   └── comparison_results.json  # Comparação com VAE
+├── venv/                        # Ambiente virtual Python
+├── requirements.txt             # Dependências (opencv, numpy, scipy, scikit-image)
+├── README.md                    # Documentação principal
+├── QUICKSTART.md                # Guia rápido de uso
+└── agente.md                    # Este arquivo
+```
 
 
 ## Princípios de Código

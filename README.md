@@ -1,34 +1,45 @@
-# GeomTransf
+# GeomTransf - Geometric Transformations for Ablation Study
 
-Geometry Transformation Tool
+Generate 100 masks using geometric transformations for comparison with VAE-generated masks.
 
 ## Setup
 
-1. Create virtual environment:
+1. Activate virtual environment:
 ```bash
-python -m venv venv
-```
-
-2. Activate virtual environment:
-```bash
-# Windows
 venv\Scripts\activate
-
-# Linux/Mac
-source venv/bin/activate
 ```
 
-3. Install dependencies:
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Usage
 
+### Generate 100 transformed masks
 ```bash
-python src/main.py
+python src/main.py generate --input D:\dataset\tgs-salt\train\masks --output output\generated_masks --count 100
 ```
 
-## Development
+### Calculate metrics
+```bash
+python src/main.py metrics --generated output\generated_masks --groundtruth D:\dataset\tgs-salt\train\masks --output results
+```
 
-Add your transformation algorithms in the `src/` directory.
+### Compare with VAE results
+```bash
+python src/main.py compare --geometric output\generated_masks --vae path\to\vae\masks --groundtruth D:\dataset\tgs-salt\train\masks
+```
+
+## Transformations Applied
+
+- Rotation (random angles)
+- Scaling (various factors)
+- Horizontal/Vertical flipping
+- Elastic deformation
+
+## Metrics Evaluated
+
+- Shape diversity (pairwise IoU)
+- Shape descriptors (area, perimeter, compactness, eccentricity)
+- Statistical comparison (Kolmogorov-Smirnov test)
