@@ -18,7 +18,7 @@ python src/main.py evaluate --generated output\generated_masks --groundtruth D:\
 
 ### 3. Comparar com Máscaras VAE (quando disponível)
 ```bash
-python src/main.py compare --geometric output\generated_masks --vae path\to\vae\masks --groundtruth D:\dataset\tgs-salt\train\masks --output results
+python src/main.py compare --geometric output\generated_masksGeomTrans1090 --vae output\generated_masksVae1090 --groundtruth D:/dataset/tgs-salt/train/masks1090 --output results
 ```
 
 ## Métricas Calculadas

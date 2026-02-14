@@ -164,12 +164,12 @@ class MaskEvaluator:
                 'set1_vs_gt': {
                     'ks_statistic': float(ks_stat_1),
                     'p_value': float(p_value_1),
-                    'similar': p_value_1 > 0.05  # Not significantly different
+                    'similar': bool(p_value_1 > 0.05)  # Not significantly different
                 },
                 'set2_vs_gt': {
                     'ks_statistic': float(ks_stat_2),
                     'p_value': float(p_value_2),
-                    'similar': p_value_2 > 0.05
+                    'similar': bool(p_value_2 > 0.05)
                 }
             }
             
