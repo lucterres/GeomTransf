@@ -79,7 +79,8 @@ class MaskEvaluator:
     def compare_sets(self, set1_dir: str, set2_dir: str,
                     groundtruth_dir: str,
                     set1_name: str = "Geometric",
-                    set2_name: str = "VAE") -> Dict:
+                    set2_name: str = "VAE",
+                    max_masks: Optional[int] = None) -> Dict:
         """Compare two mask sets against ground truth.
         
         Args:
@@ -88,6 +89,7 @@ class MaskEvaluator:
             groundtruth_dir: Directory with ground truth masks
             set1_name: Name for first set
             set2_name: Name for second set
+            max_masks: Maximum number of masks to use (None for all)
             
         Returns:
             Dictionary with comparison results
@@ -97,9 +99,9 @@ class MaskEvaluator:
         print(f"{'='*80}")
         
         # Evaluate all three sets
-        gt_results = self.evaluate_mask_set(groundtruth_dir, "Ground Truth", max_masks=100)
-        set1_results = self.evaluate_mask_set(set1_dir, set1_name, max_masks=100)
-        set2_results = self.evaluate_mask_set(set2_dir, set2_name, max_masks=100)
+        gt_results = self.evaluate_mask_set(groundtruth_dir, "Ground Truth", max_masks=max_masks)
+        set1_results = self.evaluate_mask_set(set1_dir, set1_name, max_masks=max_masks)
+        set2_results = self.evaluate_mask_set(set2_dir, set2_name, max_masks=max_masks)
         
         # Statistical comparison using K-S test
         print(f"\n{'='*80}")

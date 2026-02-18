@@ -88,7 +88,8 @@ def compare_sets(args):
         set2_dir=args.vae,
         groundtruth_dir=args.groundtruth,
         set1_name="Geometric Transforms",
-        set2_name="VAE Generated"
+        set2_name="VAE Generated",
+        max_masks=args.max_masks
     )
     
     # Save comparison results
@@ -183,6 +184,8 @@ Examples:
                             help='Directory with ground-truth masks')
     comp_parser.add_argument('--output', default='results',
                             help='Output directory for results (default: results)')
+    comp_parser.add_argument('--max-masks', type=int,
+                            help='Maximum number of masks to use for comparison (default: use all)')
     comp_parser.set_defaults(func=compare_sets)
     
     # Validate command

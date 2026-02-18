@@ -143,142 +143,142 @@
     "set_name": "VAE Generated",
     "n_masks": 10000,
     "diversity": {
-      "diversity_score": 0.7735340471494278,
-      "mean_iou": 0.22646595285057228,
-      "std_iou": 0.21227529712478868,
+      "diversity_score": 0.7570087293151748,
+      "mean_iou": 0.2429912706848252,
+      "std_iou": 0.2032336371616937,
       "min_iou": 0.0,
-      "max_iou": 0.9929281023741371,
-      "median_iou": 0.1850587789154342,
+      "max_iou": 1.0,
+      "median_iou": 0.20212518863850018,
       "n_pairs": 49995000
     },
     "shape_statistics": {
       "area": {
-        "mean": 2989.7428,
-        "std": 2069.9233739798583,
+        "mean": 3928.3339,
+        "std": 2286.325662140193,
         "min": 0.0,
-        "max": 9999.0,
-        "median": 2679.75,
-        "q25": 1381.75,
-        "q75": 4317.625
+        "max": 9870.5,
+        "median": 3724.5,
+        "q25": 1923.375,
+        "q75": 5679.125
       },
       "perimeter": {
-        "mean": 245.99322298181056,
-        "std": 106.97929330589649,
+        "mean": 287.7076627280712,
+        "std": 73.84448001417739,
         "min": 0.0,
-        "max": 700.960457444191,
-        "median": 249.69848430156708,
-        "q25": 189.95762810111046,
-        "q75": 304.42640605568886
+        "max": 564.2914113998413,
+        "median": 292.6187940835953,
+        "q25": 238.30255967378616,
+        "q75": 342.47844380140305
       },
       "compactness": {
-        "mean": 0.5123448869529725,
-        "std": 0.1751686028435011,
+        "mean": 0.5385946823307863,
+        "std": 0.1521501201935391,
         "min": 0.0,
-        "max": 0.8803370121606843,
-        "median": 0.542164166966053,
-        "q25": 0.4205296593727692,
-        "q75": 0.6389376145549702
+        "max": 0.9145834090551607,
+        "median": 0.555062565520329,
+        "q25": 0.43368271858706176,
+        "q75": 0.6582161858396043
       },
       "eccentricity": {
-        "mean": 0.7917566817051891,
-        "std": 0.2296508385474405,
-        "min": 0.0,
-        "max": 0.9999999999999994,
-        "median": 0.864032418884122,
-        "q25": 0.7387120398591573,
-        "q75": 0.9419263560409252
-      },
-      "solidity": {
-        "mean": 0.8612791260442567,
-        "std": 0.21439333998951435,
+        "mean": 0.8278055157774774,
+        "std": 0.1887390794191353,
         "min": 0.0,
         "max": 1.0,
-        "median": 0.9379915228988538,
-        "q25": 0.8674735009180109,
-        "q75": 0.964685337378388
+        "median": 0.8875824655614024,
+        "q25": 0.7577752375823874,
+        "q75": 0.9576650445002309
+      },
+      "solidity": {
+        "mean": 0.8884772105922694,
+        "std": 0.10382490198947857,
+        "min": 0.0,
+        "max": 1.0,
+        "median": 0.9203992833109331,
+        "q25": 0.8499553399338362,
+        "q75": 0.9625450789372283
       },
       "extent": {
-        "mean": 0.6480363711042105,
-        "std": 0.18704727420977757,
+        "mean": 0.6482666193329139,
+        "std": 0.16763556288460382,
         "min": 0.0,
-        "max": 0.9801980198019802,
-        "median": 0.6859043576771471,
-        "q25": 0.5899261119185922,
-        "q75": 0.7618287695590327
+        "max": 0.9799959587795515,
+        "median": 0.6558087624584718,
+        "q25": 0.5325611888111889,
+        "q75": 0.7748111912747984
       }
     },
-    "coverage": 0.3225764238800118
+    "coverage": 0.40135482795804334
   },
   "statistical_tests": {
     "area": {
+      "set1_vs_gt": {
+        "ks_statistic": 0.18,
+        "p_value": 0.07822115797841851,
+        "similar": true
+      },
+      "set2_vs_gt": {
+        "ks_statistic": 0.13,
+        "p_value": 0.36818778606286096,
+        "similar": true
+      }
+    },
+    "perimeter": {
+      "set1_vs_gt": {
+        "ks_statistic": 0.11,
+        "p_value": 0.5830090612540064,
+        "similar": true
+      },
+      "set2_vs_gt": {
+        "ks_statistic": 0.14,
+        "p_value": 0.2819416298082479,
+        "similar": true
+      }
+    },
+    "compactness": {
+      "set1_vs_gt": {
+        "ks_statistic": 0.1,
+        "p_value": 0.7020569828664881,
+        "similar": true
+      },
+      "set2_vs_gt": {
+        "ks_statistic": 0.11,
+        "p_value": 0.5830090612540064,
+        "similar": true
+      }
+    },
+    "eccentricity": {
+      "set1_vs_gt": {
+        "ks_statistic": 0.25,
+        "p_value": 0.0037294923618311367,
+        "similar": false
+      },
+      "set2_vs_gt": {
+        "ks_statistic": 0.16,
+        "p_value": 0.1548386665118475,
+        "similar": true
+      }
+    },
+    "solidity": {
+      "set1_vs_gt": {
+        "ks_statistic": 0.16,
+        "p_value": 0.1548386665118475,
+        "similar": true
+      },
+      "set2_vs_gt": {
+        "ks_statistic": 0.12,
+        "p_value": 0.469506448503778,
+        "similar": true
+      }
+    },
+    "extent": {
       "set1_vs_gt": {
         "ks_statistic": 0.22,
         "p_value": 0.015577131622877688,
         "similar": false
       },
       "set2_vs_gt": {
-        "ks_statistic": 0.35,
-        "p_value": 7.850159128072286e-06,
-        "similar": false
-      }
-    },
-    "perimeter": {
-      "set1_vs_gt": {
-        "ks_statistic": 0.15,
-        "p_value": 0.21117008625127576,
-        "similar": true
-      },
-      "set2_vs_gt": {
-        "ks_statistic": 0.3,
-        "p_value": 0.0002248739317492479,
-        "similar": false
-      }
-    },
-    "compactness": {
-      "set1_vs_gt": {
-        "ks_statistic": 0.14,
-        "p_value": 0.2819416298082479,
-        "similar": true
-      },
-      "set2_vs_gt": {
-        "ks_statistic": 0.21,
-        "p_value": 0.024055802841094577,
-        "similar": false
-      }
-    },
-    "eccentricity": {
-      "set1_vs_gt": {
-        "ks_statistic": 0.24,
-        "p_value": 0.0061340334218580265,
-        "similar": false
-      },
-      "set2_vs_gt": {
-        "ks_statistic": 0.2,
-        "p_value": 0.03638428787491733,
-        "similar": false
-      }
-    },
-    "solidity": {
-      "set1_vs_gt": {
-        "ks_statistic": 0.09,
-        "p_value": 0.8154147124661313,
-        "similar": true
-      },
-      "set2_vs_gt": {
-        "ks_statistic": 0.35,
-        "p_value": 7.850159128072286e-06,
-        "similar": false
-      }
-    },
-    "extent": {
-      "set1_vs_gt": {
-        "ks_statistic": 0.27,
-        "p_value": 0.0012935059781377376,
-        "similar": false
-      },
-      "set2_vs_gt": {
-        "ks_statistic": 0.24,
-        "p_value": 0.0061340334218580265,
+        "ks_statistic": 0.25,
+        "p_value": 0.0037294923618311367,
         "similar": false
       }
     }
@@ -286,14 +286,14 @@
   "summary": {
     "diversity_comparison": {
       "Geometric Transforms": 0.7570087293151748,
-      "VAE Generated": 0.7735340471494278,
+      "VAE Generated": 0.7570087293151748,
       "winner": "VAE Generated"
     },
     "realism_comparison": {
-      "Geometric Transforms_similar_descriptors": 3,
-      "VAE Generated_similar_descriptors": 0,
+      "Geometric Transforms_similar_descriptors": 4,
+      "VAE Generated_similar_descriptors": 5,
       "total_descriptors": 6,
-      "winner": "Geometric Transforms"
+      "winner": "VAE Generated"
     }
   }
 }
