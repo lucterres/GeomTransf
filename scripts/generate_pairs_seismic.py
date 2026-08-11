@@ -283,6 +283,117 @@ def generate_pairs(
 
 
 # ---------------------------------------------------------------------------
+# Função de completar slots faltantes
+# ---------------------------------------------------------------------------
+
+def resume_pairs(
+    images_dir: str,
+    masks_dir: str,
+    output_dir: str,
+    count: int = 1600,
+    seed: int = 200,
+    add_noise: bool = True,
+) -> None:
+    """
+    Completa os slots ausentes em output_dir/images sem re-gerar os que já existem.
+
+    - Detecta quais índices seismic_XXXX.png estão faltantes em disco.
+    - Sorteia (com reposição) novas imagens originais para cobrir esses slots.
+    - Acrescenta as novas linhas ao pairs_log.csv existente.
+    """
+    images_path = Path(images_dir)
+    masks_path  = Path(masks_dir)
+    out_path    = Path(output_dir)
+    out_images  = out_path / "images"
+    out_masks   = out_path / "masks"
+    out_images.mkdir(parents=True, exist_ok=True)
+    out_masks.mkdir(parents=True, exist_ok=True)
+
+    # ── Determina slots faltantes ─────────────────────────────────────────
+    existing = {f.stem for f in out_images.iterdir() if f.suffix == ".png"}
+    all_slots = {f"seismic_{i:04d}" for i in range(count)}
+    missing_stems = sorted(all_slots - existing)
+    missing_indices = [int(s.split("_")[1]) for s in missing_stems]
+
+    if not missing_indices:
+        print("Nenhum slot faltante encontrado — dataset já completo.")
+        return
+
+    print(f"Slots faltantes detectados    : {len(missing_indices)}")
+    print(f"Semente aleatória (resume)    : {seed}")
+
+    img_exts = {".png", ".jpg", ".jpeg", ".tif", ".tiff"}
+    all_imgs = sorted([f for f in images_path.iterdir()
+                       if f.suffix.lower() in img_exts])
+
+    rng = np.random.RandomState(seed)
+    # Sorteia com reposição para garantir que preenchemos exatamente os slots
+    chosen_indices = rng.choice(len(all_imgs), size=len(missing_indices), replace=True)
+
+    # ── Abre CSV em modo append ───────────────────────────────────────────
+    log_path = out_path / "pairs_log.csv"
+    csv_file = open(log_path, "a", newline="", encoding="utf-8")
+    csv_writer = csv.writer(csv_file)
+
+    generated = 0
+    errors    = 0
+
+    for slot_idx, src_img_idx in zip(
+        tqdm(missing_indices, desc="Completando pares faltantes"), chosen_indices
+    ):
+        img_file  = all_imgs[src_img_idx]
+        mask_file = masks_path / img_file.name
+
+        if not mask_file.exists():
+            found = list(masks_path.glob(f"{img_file.stem}.*"))
+            if not found:
+                tqdm.write(f"[AVISO] Máscara não encontrada para {img_file.name}, pulando.")
+                errors += 1
+                continue
+            mask_file = found[0]
+
+        image = cv2.imread(str(img_file),  cv2.IMREAD_GRAYSCALE)
+        mask  = cv2.imread(str(mask_file), cv2.IMREAD_GRAYSCALE)
+
+        if image is None or mask is None:
+            tqdm.write(f"[AVISO] Falha ao ler {img_file.name}, pulando.")
+            errors += 1
+            continue
+
+        _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
+
+        img_aug, mask_aug, desc = augment_pair(image, mask, rng, add_noise=add_noise)
+
+        out_img_name  = f"seismic_{slot_idx:04d}.png"
+        out_mask_name = f"seismic_{slot_idx:04d}.png"
+
+        cv2.imwrite(str(out_images / out_img_name),  img_aug)
+        cv2.imwrite(str(out_masks  / out_mask_name), mask_aug)
+
+        csv_writer.writerow([
+            slot_idx,
+            f"images/{out_img_name}",
+            f"masks/{out_mask_name}",
+            img_file.name,
+            mask_file.name,
+            desc,
+        ])
+        generated += 1
+
+    csv_file.close()
+
+    print()
+    print("=" * 60)
+    print(f"✓ Pares gerados (resume)    : {generated}")
+    if errors:
+        print(f"⚠  Pares ignorados (erro)   : {errors}")
+    total_disk = len(list(out_images.glob("*.png")))
+    print(f"✓ Total em disco agora      : {total_disk}")
+    print(f"✓ Log CSV atualizado em     : {log_path}")
+    print("=" * 60)
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -297,16 +408,30 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed",      type=int, default=99)
     parser.add_argument("--no-noise",  action="store_true",
                         help="Desativa ruído Gaussiano na imagem")
+    parser.add_argument("--resume",    action="store_true",
+                        help="Completa slots faltantes sem re-gerar os existentes")
+    parser.add_argument("--resume-seed", type=int, default=200,
+                        help="Semente para o modo resume (default: 200)")
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
-    generate_pairs(
-        images_dir = args.images,
-        masks_dir  = args.masks,
-        output_dir = args.output,
-        count      = args.count,
-        seed       = args.seed,
-        add_noise  = not args.no_noise,
-    )
+    if args.resume:
+        resume_pairs(
+            images_dir = args.images,
+            masks_dir  = args.masks,
+            output_dir = args.output,
+            count      = args.count,
+            seed       = args.resume_seed,
+            add_noise  = not args.no_noise,
+        )
+    else:
+        generate_pairs(
+            images_dir = args.images,
+            masks_dir  = args.masks,
+            output_dir = args.output,
+            count      = args.count,
+            seed       = args.seed,
+            add_noise  = not args.no_noise,
+        )
